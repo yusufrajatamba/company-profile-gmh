@@ -1,28 +1,38 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Users, Award, Heart, Compass, MessageSquare, Briefcase } from 'lucide-react';
+import { Users, Award, Heart, Compass, MessageSquare, Briefcase, ArrowRight } from 'lucide-react';
+import { Setting } from '../types';
 
-export const PelayananAlumni: React.FC = () => {
+interface PelayananAlumniProps {
+  setting?: Setting;
+  onNavigateToSection?: (sectionId: string) => void;
+}
+
+export const PelayananAlumni: React.FC<PelayananAlumniProps> = ({ setting, onNavigateToSection }) => {
   const services = [
     {
       icon: <Users className="text-church-green" size={24} />,
-      title: 'Persekutuan Alumni',
-      description: 'Wadah ibadah, doa bersama, dan berbagi kesaksian hidup antar alumni KMK USU di berbagai daerah secara hibrida.'
+      title: setting?.alumniService1Title || 'Persekutuan Alumni',
+      description: setting?.alumniService1Desc || 'Wadah ibadah, doa bersama, dan berbagi kesaksian hidup antar alumni KMK USU di berbagai daerah secara hibrida.',
+      redirect: setting?.alumniService1Redirect || 'contact'
     },
     {
       icon: <Award className="text-church-green" size={24} />,
-      title: 'Mentoring & Pembinaan',
-      description: 'Alumni senior mendampingi adik-adik mahasiswa KMK USU aktif guna memberikan bimbingan spiritual, kepemimpinan, dan kesiapan akademik.'
+      title: setting?.alumniService2Title || 'Mentoring & Pembinaan',
+      description: setting?.alumniService2Desc || 'Alumni senior mendampingi adik-adik mahasiswa KMK USU aktif guna memberikan bimbingan spiritual, kepemimpinan, dan kesiapan akademik.',
+      redirect: setting?.alumniService2Redirect || 'about-visi-misi'
     },
     {
       icon: <Heart className="text-church-green" size={24} />,
-      title: 'Aksi Sosial & Kasih',
-      description: 'Penyaluran dana beasiswa pendidikan bagi adik-adik berprestasi yang terkendala biaya, serta respons cepat tanggap bencana alam.'
+      title: setting?.alumniService3Title || 'Aksi Sosial & Kasih',
+      description: setting?.alumniService3Desc || 'Penyaluran dana beasiswa pendidikan bagi adik-adik berprestasi yang terkendala biaya, serta respons cepat tanggap bencana alam.',
+      redirect: setting?.alumniService3Redirect || 'news-pembangunan'
     },
     {
       icon: <Compass className="text-church-green" size={24} />,
-      title: 'Networking & Karier',
-      description: 'Membangun jejaring kerja profesional untuk membagikan info lowongan pekerjaan, mentoring karier, dan kemitraan strategis.'
+      title: setting?.alumniService4Title || 'Networking & Karier',
+      description: setting?.alumniService4Desc || 'Membangun jejaring kerja profesional untuk membagikan info lowongan pekerjaan, mentoring karier, dan kemitraan strategis.',
+      redirect: setting?.alumniService4Redirect || 'creation'
     }
   ];
 
@@ -31,9 +41,11 @@ export const PelayananAlumni: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-xs font-bold text-church-gold tracking-widest uppercase mb-3">Pelayanan Alumni</h2>
+          <h2 className="text-xs font-bold text-church-gold tracking-widest uppercase mb-3">
+            {setting?.alumniPageSubtitle || 'Pelayanan Alumni'}
+          </h2>
           <p className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-wider uppercase leading-tight">
-            Pelayanan Alumni PA KMK USU
+            {setting?.alumniPageTitle || 'Pelayanan Alumni PA KMK USU'}
           </p>
           <div className="h-0.5 w-16 bg-church-gold mx-auto mt-4" />
         </div>
@@ -44,8 +56,8 @@ export const PelayananAlumni: React.FC = () => {
             <h3 className="font-display font-bold text-lg uppercase tracking-wider text-church-green">
               Sinergi Saling Menguatkan & Bertumbuh Bersama
             </h3>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              Keluarga besar <strong className="text-church-green">Alumni KMK USU</strong> senantiasa rindu untuk menjadi berkat di mana pun ditempatkan. Melalui jejaring pelayanan alumni, kami mempererat tali persaudaraan rohani, mendampingi adik-adik yang masih berkuliah, dan bersinergi melayani Tuhan di dunia profesional.
+            <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">
+              {setting?.alumniPageText || `Keluarga besar Alumni KMK USU senantiasa rindu untuk menjadi berkat di mana pun ditempatkan. Melalui jejaring pelayanan alumni, kami mempererat tali persaudaraan rohani, mendampingi adik-adik yang masih berkuliah, dan bersinergi melayani Tuhan di dunia profesional.`}
             </p>
           </div>
         </div>
@@ -59,13 +71,17 @@ export const PelayananAlumni: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="bg-white border border-church-gold/15 p-6 hover:shadow-lg transition duration-300 flex items-start space-x-4"
+              onClick={() => onNavigateToSection && onNavigateToSection(service.redirect)}
+              className="bg-white border border-church-gold/15 p-6 hover:shadow-lg hover:border-church-gold/40 transition duration-300 flex items-start space-x-4 cursor-pointer group"
             >
-              <div className="p-3 bg-church-green/5 text-church-green border border-church-gold/20 flex-shrink-0">
+              <div className="p-3 bg-church-green/5 text-church-green border border-church-gold/20 flex-shrink-0 group-hover:bg-church-green group-hover:text-white transition duration-300">
                 {service.icon}
               </div>
-              <div className="space-y-2">
-                <h4 className="font-display font-bold text-xs uppercase tracking-wider text-slate-900">{service.title}</h4>
+              <div className="space-y-2 flex-grow">
+                <h4 className="font-display font-bold text-xs uppercase tracking-wider text-slate-900 group-hover:text-church-green transition flex items-center justify-between">
+                  <span>{service.title}</span>
+                  <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity ml-2 text-church-gold" />
+                </h4>
                 <p className="text-gray-500 text-xs leading-relaxed">{service.description}</p>
               </div>
             </motion.div>
@@ -81,10 +97,13 @@ export const PelayananAlumni: React.FC = () => {
             </p>
           </div>
           <div className="flex-shrink-0">
-            <div className="inline-flex items-center space-x-2 px-5 py-2.5 bg-church-gold text-church-green font-bold text-[10px] uppercase tracking-widest border border-church-gold">
+            <button
+              onClick={() => onNavigateToSection && onNavigateToSection('contact')}
+              className="inline-flex items-center space-x-2 px-5 py-2.5 bg-church-gold hover:bg-white hover:text-church-green text-church-green font-bold text-[10px] uppercase tracking-widest border border-church-gold cursor-pointer transition-all hover:-translate-y-0.5 shadow-md"
+            >
               <Briefcase size={12} />
               <span>Sinergi Profesional</span>
-            </div>
+            </button>
           </div>
         </div>
       </div>

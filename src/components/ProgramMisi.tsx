@@ -1,46 +1,52 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Compass, ClipboardList, BookOpen, Heart, Activity } from 'lucide-react';
+import { Setting } from '../types';
 
-export const ProgramMisi: React.FC = () => {
+interface ProgramMisiProps {
+  setting?: Setting;
+  onNavigateToSection?: (sectionId: string) => void;
+}
+
+export const ProgramMisi: React.FC<ProgramMisiProps> = ({ setting, onNavigateToSection }) => {
   const steps = [
     {
       number: '01',
-      title: 'Pilih Misi',
-      description: 'Pilih jenis program misi sosial atau kerohanian yang ingin Anda dukung atau ikuti.'
+      title: setting?.misiStep1Title || 'Pilih Misi',
+      description: setting?.misiStep1Desc || 'Pilih jenis program misi sosial atau kerohanian yang ingin Anda dukung atau ikuti.'
     },
     {
       number: '02',
-      title: 'Isi Formulir',
-      description: 'Lengkapi formulir registrasi dengan data diri yang valid serta komitmen pelayanan Anda.'
+      title: setting?.misiStep2Title || 'Isi Formulir',
+      description: setting?.misiStep2Desc || 'Lengkapi formulir registrasi dengan data diri yang valid serta komitmen pelayanan Anda.'
     },
     {
       number: '03',
-      title: 'Konfirmasi',
-      description: 'Hubungi tim admin kami melalui WhatsApp atau konfirmasi email setelah mendaftar.'
+      title: setting?.misiStep3Title || 'Konfirmasi',
+      description: setting?.misiStep3Desc || 'Hubungi tim admin kami melalui WhatsApp atau konfirmasi email setelah mendaftar.'
     },
     {
       number: '04',
-      title: 'Mulai Berbagi',
-      description: 'Terjun langsung ke lapangan atau salurkan dukungan doa & donasi bersama tim misi.'
+      title: setting?.misiStep4Title || 'Mulai Berbagi',
+      description: setting?.misiStep4Desc || 'Terjun langsung ke lapangan atau salurkan dukungan doa & donasi bersama tim misi.'
     }
   ];
 
   const typesOfMissions = [
     {
       icon: <BookOpen className="text-church-green" size={20} />,
-      title: 'Misi Penginjilan & Doa',
-      desc: 'Pelayanan pekabaran kabar baik rutin ke desa-desa binaan, kebaktian kebangunan rohani, serta dukungan doa syafaat rutin.'
+      title: setting?.misiPilar1Title || 'Misi Penginjilan & Doa',
+      desc: setting?.misiPilar1Desc || 'Pelayanan pekabaran kabar baik rutin ke desa-desa binaan, kebaktian kebangunan rohani, serta dukungan doa syafaat rutin.'
     },
     {
       icon: <Activity className="text-church-green" size={20} />,
-      title: 'Misi Medis & Pelayanan Kesehatan',
-      desc: 'Pemeriksaan kesehatan gratis, pengobatan massal, penyuluhan gizi buruk, dan pembagian vitamin bagi masyarakat prasejahtera.'
+      title: setting?.misiPilar2Title || 'Misi Medis & Pelayanan Kesehatan',
+      desc: setting?.misiPilar2Desc || 'Pemeriksaan kesehatan gratis, pengobatan massal, penyuluhan gizi buruk, dan pembagian vitamin bagi masyarakat prasejahtera.'
     },
     {
       icon: <Heart className="text-church-green" size={20} />,
-      title: 'Pemberdayaan Pendidikan Anak',
-      desc: 'Bimbingan belajar gratis bagi anak-anak di pedalaman Sumatera Utara, penyediaan buku rohani, dan fasilitas kelas mini.'
+      title: setting?.misiPilar3Title || 'Pemberdayaan Pendidikan Anak',
+      desc: setting?.misiPilar3Desc || 'Bimbingan belajar gratis bagi anak-anak di pedalaman Sumatera Utara, penyediaan buku rohani, dan fasilitas kelas mini.'
     }
   ];
 
@@ -49,9 +55,11 @@ export const ProgramMisi: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-xs font-bold text-church-gold tracking-widest uppercase mb-3">Program Misi</h2>
+          <h2 className="text-xs font-bold text-church-gold tracking-widest uppercase mb-3">
+            {setting?.misiPageSubtitle || 'Program Misi'}
+          </h2>
           <p className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-wider uppercase leading-tight">
-            Global Mission House Project (GMHP)
+            {setting?.misiPageTitle || 'Global Mission House Project (GMHP)'}
           </p>
           <div className="h-0.5 w-16 bg-church-gold mx-auto mt-4" />
         </div>
@@ -62,8 +70,8 @@ export const ProgramMisi: React.FC = () => {
             <h3 className="font-display font-bold text-lg uppercase tracking-wider text-church-green">
               Melangkah Bersama Menjangkau yang Terlupakan
             </h3>
-            <p className="text-gray-600 text-sm leading-relaxed">
-              Melalui program <strong className="text-church-green">GMHP</strong>, persekutuan alumni mengoordinasikan berbagai aksi nyata untuk melayani jiwa-jiwa di daerah terpencil dan melayani sesama secara holistik. Kami tidak hanya membagikan bantuan fisik, melainkan juga menanamkan pengharapan kekal di dalam Kristus.
+            <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">
+              {setting?.misiPageText || `Melalui program GMHP, persekutuan alumni mengoordinasikan various aksi nyata untuk melayani jiwa-jiwa di daerah terpencil dan melayani sesama secara holistik. Kami tidak hanya membagikan bantuan fisik, melainkan juga menanamkan pengharapan kekal di dalam Kristus.`}
             </p>
           </div>
         </div>
@@ -125,16 +133,26 @@ export const ProgramMisi: React.FC = () => {
         </div>
 
         {/* Info Callout */}
-        <div className="bg-church-green/5 border border-church-gold/25 p-6 mt-16 flex items-start space-x-4">
-          <div className="p-2.5 bg-church-gold/10 text-church-green border border-church-gold/20 flex-shrink-0">
-            <ClipboardList size={18} />
+        <div className="bg-church-green/5 border border-church-gold/25 p-6 mt-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-start space-x-4">
+            <div className="p-2.5 bg-church-gold/10 text-church-green border border-church-gold/20 flex-shrink-0">
+              <ClipboardList size={18} />
+            </div>
+            <div>
+              <h5 className="font-display font-bold text-xs uppercase tracking-wider text-church-green mb-1.5">Siap Berpartisipasi?</h5>
+              <p className="text-[11px] text-gray-600 leading-relaxed">
+                Anda dapat mendaftarkan diri secara langsung pada tab <strong className="text-church-green">Contact</strong> menggunakan Formulir Pendaftaran Misi yang tersedia. Tim kami akan segera memproses data diri Anda dan mengirimkan informasi pemberitahuan jadwal pembekalan.
+              </p>
+            </div>
           </div>
-          <div>
-            <h5 className="font-display font-bold text-xs uppercase tracking-wider text-church-green mb-1.5">Siap Berpartisipasi?</h5>
-            <p className="text-[11px] text-gray-600 leading-relaxed">
-              Anda dapat mendaftarkan diri secara langsung pada tab <strong className="text-church-green">Contact</strong> menggunakan Formulir Pendaftaran Misi yang tersedia. Tim kami akan segera memproses data diri Anda dan mengirimkan informasi pemberitahuan jadwal pembekalan.
-            </p>
-          </div>
+          {onNavigateToSection && (
+            <button
+              onClick={() => onNavigateToSection('contact')}
+              className="px-5 py-2.5 bg-church-green hover:bg-church-gold text-white text-[10px] font-bold uppercase tracking-widest transition self-start sm:self-center flex-shrink-0 cursor-pointer"
+            >
+              Hubungi Kontak & Daftar
+            </button>
+          )}
         </div>
       </div>
     </div>

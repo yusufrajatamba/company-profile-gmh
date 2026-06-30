@@ -1,32 +1,64 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Users, Shield, User, Landmark, Layers } from 'lucide-react';
+import { Setting } from '../types';
 
-export const StrukturYayasan: React.FC = () => {
-  const pembina = [
+interface StrukturYayasanProps {
+  setting: Setting;
+}
+
+export const StrukturYayasan: React.FC<StrukturYayasanProps> = ({ setting }) => {
+  let pembina = [
     { name: 'Dr. John Wesley, M.Th.', role: 'Ketua Dewan Pembina' },
     { name: 'Ev. Yusuf Sembiring, S.E.', role: 'Anggota Pembina' },
     { name: 'Pdt. Ir. Saut Manurung', role: 'Anggota Pembina' }
   ];
 
-  const pengawas = [
+  let pengawas = [
     { name: 'Ir. Richard Tambunan, M.M.', role: 'Ketua Dewan Pengawas' },
     { name: 'Sabar Pardede, S.H.', role: 'Anggota Pengawas' }
   ];
 
-  const pengurusHarian = [
+  let pengurusHarian = [
     { name: 'Yusuf Raja Tamba, S.T.', role: 'Ketua Yayasan / Badan Pengurus' },
     { name: 'Ir. Daniel Simanjuntak', role: 'Wakil Ketua' },
     { name: 'Ruth Siregar, S.Kom.', role: 'Sekretaris Umum' },
     { name: 'Maria Hutapea, S.E.', role: 'Bendahara Umum' }
   ];
 
-  const departemen = [
+  let departemen = [
     { name: 'Ev. Markus Ginting, M.Div.', dept: 'Bidang Pembinaan & Spiritualitas' },
     { name: 'dr. Sarah Pangaribuan', dept: 'Bidang Pelayanan Medis & Misi Pedesaan' },
     { name: 'Toni Nababan, S.Pd.', dept: 'Bidang Pendidikan & Bimbingan Belajar' },
     { name: 'Grace Marbun, S.Ak.', dept: 'Bidang Hubungan Alumni & Media' }
   ];
+
+  if (setting.pembinaJson) {
+    try {
+      const parsed = JSON.parse(setting.pembinaJson);
+      if (Array.isArray(parsed)) pembina = parsed;
+    } catch (e) { console.error('Error parsing pembinaJson', e); }
+  }
+  if (setting.pengawasJson) {
+    try {
+      const parsed = JSON.parse(setting.pengawasJson);
+      if (Array.isArray(parsed)) pengawas = parsed;
+    } catch (e) { console.error('Error parsing pengawasJson', e); }
+  }
+  if (setting.pengurusHarianJson) {
+    try {
+      const parsed = JSON.parse(setting.pengurusHarianJson);
+      if (Array.isArray(parsed)) pengurusHarian = parsed;
+    } catch (e) { console.error('Error parsing pengurusHarianJson', e); }
+  }
+  if (setting.departemenJson) {
+    try {
+      const parsed = JSON.parse(setting.departemenJson);
+      if (Array.isArray(parsed)) departemen = parsed;
+    } catch (e) { console.error('Error parsing departemenJson', e); }
+  }
+
+  const strukturTitle = setting.strukturTitle || 'Dewan Pengurus & Pelaksana Pelayanan';
 
   return (
     <div className="py-24 bg-[#faf9f6]">
@@ -35,7 +67,7 @@ export const StrukturYayasan: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-xs font-bold text-church-gold tracking-widest uppercase mb-3">Struktur Yayasan</h2>
           <p className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-wider uppercase leading-tight">
-            Dewan Pengurus & Pelaksana Pelayanan
+            {strukturTitle}
           </p>
           <div className="h-0.5 w-16 bg-church-gold mx-auto mt-4" />
         </div>

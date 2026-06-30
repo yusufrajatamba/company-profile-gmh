@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { BookOpen, Download, Search, FileText, Compass, ExternalLink } from 'lucide-react';
+import { Setting } from '../types';
 
-export const Library: React.FC = () => {
+interface LibraryProps {
+  setting?: Setting;
+}
+
+export const Library: React.FC<LibraryProps> = ({ setting }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Semua');
 
@@ -51,9 +56,11 @@ export const Library: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-xs font-bold text-church-gold tracking-widest uppercase mb-3">Resource Library</h2>
+          <h2 className="text-xs font-bold text-church-gold tracking-widest uppercase mb-3">
+            {setting?.librarySubtitle || 'Resource Library'}
+          </h2>
           <p className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-wider uppercase leading-tight">
-            Perpustakaan & Sumber Belajar Digital
+            {setting?.libraryTitle || 'Perpustakaan & Sumber Belajar Digital'}
           </p>
           <div className="h-0.5 w-16 bg-church-gold mx-auto mt-4" />
         </div>

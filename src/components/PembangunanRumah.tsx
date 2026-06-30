@@ -1,13 +1,18 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Landmark, Coins, CreditCard, MailCheck, ShieldCheck } from 'lucide-react';
+import { Landmark, CreditCard, MailCheck } from 'lucide-react';
+import { Setting } from '../types';
 
-export const PembangunanRumah: React.FC = () => {
-  const currentProgress = 65; // %
-  const targetAmount = 'Rp 1.500.000.000';
-  const raisedAmount = 'Rp 975.000.000';
+interface PembangunanRumahProps {
+  setting: Setting;
+}
 
-  const accounts = [
+export const PembangunanRumah: React.FC<PembangunanRumahProps> = ({ setting }) => {
+  const currentProgress = setting.pembangunanProgress !== undefined ? setting.pembangunanProgress : 65; // %
+  const targetAmount = setting.pembangunanTarget || 'Rp 1.500.000.000';
+  const raisedAmount = setting.pembangunanRaised || 'Rp 975.000.000';
+
+  let accounts = [
     {
       bank: 'Bank Mandiri',
       number: '111-00123-45678',
@@ -20,6 +25,23 @@ export const PembangunanRumah: React.FC = () => {
     }
   ];
 
+  if (setting.bankAccountsJson) {
+    try {
+      const parsed = JSON.parse(setting.bankAccountsJson);
+      if (Array.isArray(parsed)) {
+        accounts = parsed;
+      }
+    } catch (e) {
+      console.error('Error parsing bankAccountsJson', e);
+    }
+  }
+
+  const pembangunanTitle = setting.pembangunanTitle || 'Rumah Persekutuan GMH';
+  const pembangunanSubtitle = setting.pembangunanSubtitle || 'Membangun Masa Depan Pelayanan yang Kokoh';
+  const text1 = setting.pembangunanText1 || 'Rumah Persekutuan Global Mission House dipersiapkan untuk menjadi pusat administrasi pelayanan alumni, asrama pembinaan sementara mahasiswa Kristen USU aktif, dan pusat latihan misi jangka pendek sebelum relawan diutus ke pedalaman.';
+  const text2 = setting.pembangunanText2 || 'Dengan luas bangunan terencana sebesar 450 m², gedung ini akan dilengkapi dengan ruang ibadah, sekretariat bersama, perpustakaan teologi, serta kamar inap bagi misionaris tamu. Melalui dukungan dari seluruh alumni, kami rindu menyelesaikan pembangunan ini tepat waktu demi kemuliaan nama Tuhan.';
+  const imageUrl = setting.pembangunanImageUrl || 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80';
+
   return (
     <div className="py-24 bg-[#faf9f6]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,7 +49,7 @@ export const PembangunanRumah: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-xs font-bold text-church-gold tracking-widest uppercase mb-3">Proyek Pembangunan</h2>
           <p className="font-display font-bold text-3xl sm:text-4xl text-slate-900 tracking-wider uppercase leading-tight">
-            Rumah Persekutuan GMH
+            {pembangunanTitle}
           </p>
           <div className="h-0.5 w-16 bg-church-gold mx-auto mt-4" />
         </div>
@@ -36,19 +58,19 @@ export const PembangunanRumah: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
           <div className="lg:col-span-7 space-y-6">
             <h3 className="font-display font-bold text-lg uppercase tracking-wider text-church-green">
-              Membangun Masa Depan Pelayanan yang Kokoh
+              {pembangunanSubtitle}
             </h3>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              <strong className="text-church-green">Rumah Persekutuan Global Mission House</strong> dipersiapkan untuk menjadi pusat administrasi pelayanan alumni, asrama pembinaan sementara mahasiswa Kristen USU aktif, dan pusat latihan misi jangka pendek sebelum relawan diutus ke pedalaman.
+            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+              {text1}
             </p>
-            <p className="text-sm text-gray-600 leading-relaxed">
-              Dengan luas bangunan terencana sebesar 450 m², gedung ini akan dilengkapi dengan ruang ibadah, sekretariat bersama, perpustakaan teologi, serta kamar inap bagi misionaris tamu. Melalui dukungan dari seluruh alumni, kami rindu menyelesaikan pembangunan ini tepat waktu demi kemuliaan nama Tuhan.
+            <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">
+              {text2}
             </p>
           </div>
           <div className="lg:col-span-5 relative">
             <div className="aspect-video sm:aspect-square border border-church-gold/30 p-2 bg-white shadow-lg">
               <img
-                src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80"
+                src={imageUrl}
                 alt="Construction of GMH House"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"

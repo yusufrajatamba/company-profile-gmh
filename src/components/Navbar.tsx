@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Menu, X, ShieldAlert, LayoutDashboard, LogOut, ChevronDown } from 'lucide-react';
+import { Setting } from '../types';
 
 interface NavbarProps {
+  setting?: Setting;
   isAdminLoggedIn: boolean;
   onAdminClick: () => void;
   onLogout: () => void;
@@ -10,6 +12,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
+  setting,
   isAdminLoggedIn,
   onAdminClick,
   onLogout,
@@ -56,10 +59,21 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex justify-between h-20">
           {/* Logo */}
           <div className="flex items-center cursor-pointer" onClick={() => handleNavClick('home')}>
-            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center p-0.5 shadow-inner mr-3 flex-shrink-0">
-              <div className="w-full h-full border border-church-green rounded-full flex items-center justify-center">
-                <span className="text-church-green font-extrabold text-base">G</span>
-              </div>
+            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center p-0.5 shadow-inner mr-3 flex-shrink-0 overflow-hidden">
+              {setting?.logoUrl ? (
+                <img
+                  src={setting.logoUrl}
+                  alt="Logo"
+                  className="w-full h-full object-cover rounded-full"
+                  referrerPolicy="no-referrer"
+                />
+              ) : (
+                <div className="w-full h-full border border-church-green rounded-full flex items-center justify-center">
+                  <span className="text-church-green font-extrabold text-base">
+                    {setting?.logoText || 'G'}
+                  </span>
+                </div>
+              )}
             </div>
             <div className="flex-shrink-0 flex flex-col justify-center">
               <span className="font-display font-bold text-sm sm:text-base text-white tracking-widest leading-none uppercase">
@@ -87,11 +101,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* About Dropdown */}
             <div 
-              className="relative group py-5"
+              className="relative py-5"
               onMouseEnter={() => setAboutOpen(true)}
               onMouseLeave={() => setAboutOpen(false)}
             >
               <button
+                onClick={() => setAboutOpen(!aboutOpen)}
                 className={`flex items-center space-x-1 text-[11px] lg:text-xs font-bold uppercase tracking-widest transition duration-200 cursor-pointer ${
                   activeSection.startsWith('about')
                     ? 'text-church-gold border-b-2 border-church-gold pb-1 mt-1'
@@ -99,11 +114,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 <span>About</span>
-                <ChevronDown size={12} className="group-hover:rotate-180 transition duration-200" />
+                <ChevronDown size={12} className={`transition duration-200 ${aboutOpen ? 'rotate-180' : ''}`} />
               </button>
               
               {/* Dropdown Box */}
-              <div className="absolute top-[68px] left-0 w-52 bg-white text-slate-900 border border-gray-100 shadow-xl opacity-0 group-hover:opacity-100 invisible group-hover:visible transition duration-200 z-50">
+              <div className={`absolute top-full left-0 w-52 bg-white text-slate-900 border border-gray-100 shadow-xl transition-all duration-200 z-50 ${
+                aboutOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+              }`}>
                 <div className="h-1 bg-church-green w-full" />
                 <div className="py-2">
                   {aboutSubMenu.map((sub) => (
@@ -123,11 +140,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* Program Dropdown */}
             <div 
-              className="relative group py-5"
+              className="relative py-5"
               onMouseEnter={() => setProgramOpen(true)}
               onMouseLeave={() => setProgramOpen(false)}
             >
               <button
+                onClick={() => setProgramOpen(!programOpen)}
                 className={`flex items-center space-x-1 text-[11px] lg:text-xs font-bold uppercase tracking-widest transition duration-200 cursor-pointer ${
                   activeSection.startsWith('program')
                     ? 'text-church-gold border-b-2 border-church-gold pb-1 mt-1'
@@ -135,10 +153,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 <span>Program</span>
-                <ChevronDown size={12} className="group-hover:rotate-180 transition duration-200" />
+                <ChevronDown size={12} className={`transition duration-200 ${programOpen ? 'rotate-180' : ''}`} />
               </button>
 
-              <div className="absolute top-[68px] left-0 w-60 bg-white text-slate-900 border border-gray-100 shadow-xl opacity-0 group-hover:opacity-100 invisible group-hover:visible transition duration-200 z-50">
+              <div className={`absolute top-full left-0 w-60 bg-white text-slate-900 border border-gray-100 shadow-xl transition-all duration-200 z-50 ${
+                programOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+              }`}>
                 <div className="h-1 bg-church-green w-full" />
                 <div className="py-2">
                   {programSubMenu.map((sub) => (
@@ -158,11 +178,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             {/* News Dropdown */}
             <div 
-              className="relative group py-5"
+              className="relative py-5"
               onMouseEnter={() => setNewsOpen(true)}
               onMouseLeave={() => setNewsOpen(false)}
             >
               <button
+                onClick={() => setNewsOpen(!newsOpen)}
                 className={`flex items-center space-x-1 text-[11px] lg:text-xs font-bold uppercase tracking-widest transition duration-200 cursor-pointer ${
                   activeSection.startsWith('news')
                     ? 'text-church-gold border-b-2 border-church-gold pb-1 mt-1'
@@ -170,10 +191,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 <span>News</span>
-                <ChevronDown size={12} className="group-hover:rotate-180 transition duration-200" />
+                <ChevronDown size={12} className={`transition duration-200 ${newsOpen ? 'rotate-180' : ''}`} />
               </button>
 
-              <div className="absolute top-[68px] left-0 w-64 bg-white text-slate-900 border border-gray-100 shadow-xl opacity-0 group-hover:opacity-100 invisible group-hover:visible transition duration-200 z-50">
+              <div className={`absolute top-full left-0 w-64 bg-white text-slate-900 border border-gray-100 shadow-xl transition-all duration-200 z-50 ${
+                newsOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+              }`}>
                 <div className="h-1 bg-church-green w-full" />
                 <div className="py-2">
                   {newsSubMenu.map((sub) => (

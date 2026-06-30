@@ -34,7 +34,70 @@ const DEFAULT_SETTING: Setting = {
   misi: '• Melayani alumni dalam pembinaan iman, pertumbuhan spiritual, serta pengembangan karier profesional.\n• Membina dan mendampingi adik-adik mahasiswa aktif KMK USU agar siap menghadapi tantangan dunia kerja sekuler.\n• Mendukung, memfasilitasi, dan mengoordinasikan aksi misi pekabaran Injil serta pelayanan sosial kemanusiaan secara berkala.',
   address: 'Jln. Bunga Teratai Gg. Bunga Teratai II Medan Selayang',
   email: 'pakmkusumdn@gmail.com',
-  phone: '+62 822-7636-3241'
+  phone: '+62 822-7636-3241',
+  themeGreen: '#10b981',
+  themeGold: '#f59e0b',
+  themeName: 'Hijau & Emas Cerah',
+
+  // Program Misi Defaults
+  misiPageTitle: 'Global Mission House Project (GMHP)',
+  misiPageSubtitle: 'Program Misi',
+  misiPageText: 'Melalui program GMHP, persekutuan alumni mengoordinasikan berbagai aksi nyata untuk melayani jiwa-jiwa di daerah terpencil dan melayani sesama secara holistik. Kami tidak hanya membagikan bantuan fisik, melainkan juga menanamkan pengharapan kekal di dalam Kristus.',
+
+  // Pelayanan Alumni Defaults
+  alumniPageTitle: 'Pelayanan Alumni PA KMK USU',
+  alumniPageSubtitle: 'Pelayanan Alumni',
+  alumniPageText: 'Keluarga besar Alumni KMK USU senantiasa rindu untuk menjadi berkat di mana pun ditempatkan. Melalui jejaring pelayanan alumni, kami mempererat tali persaudaraan rohani, mendampingi adik-adik yang masih berkuliah, dan bersinergi melayani Tuhan di dunia profesional.',
+
+  // Alumni Berkarya Defaults
+  berkaryaTitle: 'ALUMNI BERKARYA',
+  berkaryaSubtitle: '"Setiap talenta adalah anugerah dari Tuhan yang patut dibagikan. Mari bersama-sama menyatakan kasih dan kebenaran, karyamu menjadi berkat dan kesaksian yang menguatkan banyak jiwa."',
+
+  // Library Defaults
+  libraryTitle: 'Perpustakaan & Sumber Belajar Digital',
+  librarySubtitle: 'Resource Library',
+
+  // Logo & Home Hero Background Defaults
+  logoUrl: '',
+  logoText: 'G',
+  heroBgUrl: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1920&q=80',
+  showHeroSection: true,
+
+  // Fokus Visi Strategis Home Section Defaults
+  homeVisiTitle: 'Membangun Generasi Alumni Kristen Berintegritas',
+  homeVisiDesc: 'Global Mission House (GMH) hadir sebagai oase rohani dan wadah kolaboratif bagi seluruh lulusan KMK Universitas Sumatera Utara. Kami percaya alumni bukan sekadar mantan mahasiswa, melainkan utusan Kristus di bidang profesional masing-masing.',
+
+  // Program Misi - 3 Focus Pillars Defaults
+  misiPilar1Title: 'Misi Penginjilan & Doa',
+  misiPilar1Desc: 'Pelayanan pekabaran kabar baik rutin ke desa-desa binaan, kebaktian kebangunan rohani, serta dukungan doa syafaat rutin.',
+  misiPilar2Title: 'Misi Medis & Pelayanan Kesehatan',
+  misiPilar2Desc: 'Pemeriksaan kesehatan gratis, pengobatan massal, penyuluhan gizi buruk, dan pembagian vitamin bagi masyarakat prasejahtera.',
+  misiPilar3Title: 'Pemberdayaan Pendidikan Anak',
+  misiPilar3Desc: 'Bimbingan belajar gratis bagi anak-anak di pedalaman Sumatera Utara, penyediaan buku rohani, dan fasilitas kelas mini.',
+
+  // Program Misi - 4 Steps process Defaults
+  misiStep1Title: 'Pilih Misi',
+  misiStep1Desc: 'Pilih jenis program misi sosial atau kerohanian yang ingin Anda dukung atau ikuti.',
+  misiStep2Title: 'Isi Formulir',
+  misiStep2Desc: 'Lengkapi formulir registrasi dengan data diri yang valid serta komitmen pelayanan Anda.',
+  misiStep3Title: 'Konfirmasi',
+  misiStep3Desc: 'Hubungi tim admin kami melalui WhatsApp atau konfirmasi email setelah mendaftar.',
+  misiStep4Title: 'Mulai Berbagi',
+  misiStep4Desc: 'Terjun langsung ke lapangan atau salurkan dukungan doa & donasi bersama tim misi.',
+
+  // Pelayanan Alumni - 4 Service Items Defaults
+  alumniService1Title: 'Persekutuan Alumni',
+  alumniService1Desc: 'Wadah ibadah, doa bersama, dan berbagi kesaksian hidup antar alumni KMK USU di berbagai daerah secara hibrida.',
+  alumniService1Redirect: 'contact',
+  alumniService2Title: 'Mentoring & Pembinaan',
+  alumniService2Desc: 'Alumni senior mendampingi adik-adik mahasiswa KMK USU aktif guna memberikan bimbingan spiritual, kepemimpinan, dan kesiapan akademik.',
+  alumniService2Redirect: 'about-visi-misi',
+  alumniService3Title: 'Aksi Sosial & Kasih',
+  alumniService3Desc: 'Penyaluran dana beasiswa pendidikan bagi adik-adik berprestasi yang terkendala biaya, serta respons cepat tanggap bencana alam.',
+  alumniService3Redirect: 'news-pembangunan',
+  alumniService4Title: 'Networking & Karier',
+  alumniService4Desc: 'Membangun jejaring kerja profesional untuk membagikan info lowongan pekerjaan, mentoring karier, dan kemitraan strategis.',
+  alumniService4Redirect: 'creation'
 };
 
 export default function App() {
@@ -252,18 +315,19 @@ export default function App() {
             setting={setting}
             onStartMisi={() => setActiveSection('contact')}
             onViewAlumni={() => setActiveSection('program-alumni')}
+            onNavigateToSection={(sectionId) => setActiveSection(sectionId)}
           />
         );
       case 'about-sejarah':
-        return <SejarahSingkat />;
+        return <SejarahSingkat setting={setting} />;
       case 'about-visi-misi':
         return <VisiMisi setting={setting} />;
       case 'about-struktur':
-        return <StrukturYayasan />;
+        return <StrukturYayasan setting={setting} />;
       case 'program-misi':
-        return <ProgramMisi />;
+        return <ProgramMisi setting={setting} onNavigateToSection={(sectionId) => setActiveSection(sectionId)} />;
       case 'program-alumni':
-        return <PelayananAlumni />;
+        return <PelayananAlumni setting={setting} onNavigateToSection={(sectionId) => setActiveSection(sectionId)} />;
       case 'news-gallery':
         return <Activities activities={activities} />;
       case 'news-warta':
@@ -271,11 +335,11 @@ export default function App() {
       case 'news-artikel':
         return <Blog articles={articles} />;
       case 'news-pembangunan':
-        return <PembangunanRumah />;
+        return <PembangunanRumah setting={setting} />;
       case 'creation':
-        return <AlumniBerkarya />;
+        return <AlumniBerkarya setting={setting} />;
       case 'library':
-        return <Library />;
+        return <Library setting={setting} />;
       case 'contact':
         return <Contact setting={setting} />;
       default:
@@ -291,8 +355,17 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-[#faf9f6]">
+      {/* Dynamic Theme Color Injection */}
+      <style>{`
+        :root {
+          --color-church-green: ${setting.themeGreen || '#10b981'} !important;
+          --color-church-gold: ${setting.themeGold || '#f59e0b'} !important;
+        }
+      `}</style>
+
       {/* Navbar Navigation */}
       <Navbar
+        setting={setting}
         isAdminLoggedIn={isAdminLoggedIn}
         onAdminClick={() => setIsCmsOpen(true)}
         onLogout={handleLogout}
@@ -321,15 +394,6 @@ export default function App() {
             © {new Date().getFullYear()} Global Mission House - PA KMK USU. Semua Hak Cipta Dilindungi.
             <br />
             <span className="text-church-gold">Menjadi saksi Kristus yang berintegritas dan profesional di mana pun kita diutus.</span>
-          </div>
-          {/* Subtle Admin Link */}
-          <div>
-            <button
-              onClick={() => setIsCmsOpen(true)}
-              className="text-[10px] font-bold uppercase tracking-wider text-church-gold hover:text-white transition cursor-pointer underline decoration-church-gold/40 hover:decoration-white"
-            >
-              Portal Administrasi Website (CMS)
-            </button>
           </div>
         </div>
       </footer>

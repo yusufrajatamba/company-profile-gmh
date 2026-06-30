@@ -1,8 +1,13 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Lightbulb, Share2, Award, Heart, CheckCircle2 } from 'lucide-react';
+import { Setting } from '../types';
 
-export const AlumniBerkarya: React.FC = () => {
+interface AlumniBerkaryaProps {
+  setting?: Setting;
+}
+
+export const AlumniBerkarya: React.FC<AlumniBerkaryaProps> = ({ setting }) => {
   const works = [
     {
       title: 'Buku: Berakar Di Dunia Sekuler',
@@ -47,7 +52,7 @@ export const AlumniBerkarya: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="font-display font-black text-4xl sm:text-6xl text-white tracking-widest uppercase"
           >
-            ALUMNI BERKARYA
+            {setting?.berkaryaTitle || 'ALUMNI BERKARYA'}
           </motion.h1>
           <div className="h-0.5 w-24 bg-church-gold mx-auto" />
           <motion.p
@@ -56,8 +61,7 @@ export const AlumniBerkarya: React.FC = () => {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="text-sm sm:text-base text-church-gold/90 max-w-3xl mx-auto font-sans leading-relaxed whitespace-pre-line"
           >
-            "Setiap talenta adalah anugerah dari Tuhan yang patut dibagikan.
-            Mari bersama-sama menyatakan kasih dan kebenaran, karyamu menjadi berkat dan kesaksian yang menguatkan banyak jiwa."
+            {setting?.berkaryaSubtitle || `"Setiap talenta adalah anugerah dari Tuhan yang patut dibagikan. Mari bersama-sama menyatakan kasih dan kebenaran, karyamu menjadi berkat dan kesaksian yang menguatkan banyak jiwa."`}
           </motion.p>
         </div>
       </div>
