@@ -1,0 +1,6 @@
+{
+  "name": "Website Portal GMHP-AKMK",
+  "description": "Website Portal Resmi dan Dinamis GMHP-AKMK (Gerakan Masyarakat Hidup Sehat - Aliansi Kebijakan Kesehatan Masyarakat) dengan Fitur CMS (Content Management System) Terintegrasi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

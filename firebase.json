@@ -1,0 +1,8 @@
+{
+  "firestore": [
+    {
+      "database": "ai-studio-websiteportalgmh-4b3a0393-0191-4a8a-947f-ad6b5f8c644b",
+      "rules": "firestore.rules"
+    }
+  ]
+}

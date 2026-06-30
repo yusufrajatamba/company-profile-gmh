@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /settings/{document} {
+      allow read, write: if true;
+    }
+    match /articles/{document} {
+      allow read, write: if true;
+    }
+    match /activities/{document} {
+      allow read, write: if true;
+    }
+    match /misi_registrations/{document} {
+      allow read, write: if true;
+    }
+    match /messages/{document} {
+      allow read, write: if true;
+    }
+    match /admins/{document} {
+      allow read, write: if true;
+    }
+    // Fallback rule
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
